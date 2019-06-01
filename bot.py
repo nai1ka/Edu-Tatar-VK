@@ -76,7 +76,7 @@ def auth(login,password,user_id):
 
 def collect(login,passwd,user_id,dayforcol):
     r = auth(login,passwd,user_id).get("https://edu.tatar.ru/user/diary.xml")
-    print(r.text)
+   
     data = dict.fromkeys(['Lesson', 'Homework', 'Mark'])
     finish_lesson = []
     homework = []
