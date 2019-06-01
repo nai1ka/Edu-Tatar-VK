@@ -76,6 +76,7 @@ def auth(login,password,user_id):
 
 def collect(login,passwd,user_id,dayforcol):
     r = auth(login,passwd,user_id).get("https://edu.tatar.ru/user/diary.xml")
+    print(r.text)
     data = dict.fromkeys(['Lesson', 'Homework', 'Mark'])
     finish_lesson = []
     homework = []
@@ -83,7 +84,7 @@ def collect(login,passwd,user_id,dayforcol):
     root = et.XML(r.text)
     for elem in root:
         for day1 in elem:
-            if(day1.attrib["date"]==str(dayforcol)) and (elem.attrib["month"]==moth):
+            if(day1.attrib["date"]==str(dayforcol)) and (elem.attrib["month"]=="Май"):
                 for lesson in day1.find("classes"):
                     if lesson.text!=None:
                         
@@ -121,8 +122,6 @@ def main():
                 
                     # Сообщение от пользователя
                 request = event.text
-                print (login)
-                print(passwd)
                     
                 if request == "Логин":
                     write_msg(event.user_id, "Введите Ваш логин от EduTatar")
@@ -152,7 +151,7 @@ def main():
                             write_msg(event.user_id, "["+str(i+1)+"]"+"Урок: "+data["Lesson"][i]+"\nДомашняя работа: "+ data["Homewrok"][i]+"\nОценка: "+ data["Mark"][i])
                 elif request == "Понедельник":
                     data=collect(user_login,user_password,event.user_id,monday)
-                    
+                    print(data)
                     for i in range(len(data["Lesson"])):
                         if(data["Lesson"][i]!="None"):
                             write_msg(event.user_id, "["+str(i+1)+"]"+"Урок: "+data["Lesson"][i]+"\nДомашняя работа: "+ data["Homewrok"][i]+"\nОценка: "+ data["Mark"][i])     
