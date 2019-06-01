@@ -58,6 +58,9 @@ def write_msg(user_id, message):
 
 
 def auth(login,password,user_id):
+    proxies = {
+      'https': 'https://91.208.39.70:8080'
+    }    
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36',
         'referer' : 'https://edu.tatar.ru/logon'
@@ -69,14 +72,13 @@ def auth(login,password,user_id):
           'main_password':str(password[user_id]["password"])
        }  
     session = requests.Session()
-    session.get("https://edu.tatar.ru/logon")
-    session.post("https://edu.tatar.ru/logon",params,headers=headers)
+    session.get("https://edu.tatar.ru/logon",proxies=proxies)
+    session.post("https://edu.tatar.ru/logon",params,headers=headers,proxies=proxies)
     
     return session
 
 def collect(login,passwd,user_id,dayforcol):
     r = auth(login,passwd,user_id).get("https://edu.tatar.ru/user/diary.xml")
-   
     data = dict.fromkeys(['Lesson', 'Homework', 'Mark'])
     finish_lesson = []
     homework = []
