@@ -59,7 +59,7 @@ def write_msg(user_id, message):
 
 def auth(login,password,user_id):
     proxies = {
-      'https': 'https://95.47.183.23:3128'
+      'https': 'https://188.225.9.121:8080'
     }    
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36',
