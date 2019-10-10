@@ -86,7 +86,7 @@ def collect(login,passwd,user_id,dayforcol):
     root = et.XML(r.text)
     for elem in root:
         for day1 in elem:
-            if(day1.attrib["date"]==str(dayforcol)) and (elem.attrib["month"]=="Май"):
+            if(day1.attrib["date"]==str(dayforcol)) and (elem.attrib["month"]==moth):
                 for lesson in day1.find("classes"):
                     if lesson.text!=None:
                         
