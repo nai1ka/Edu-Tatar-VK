@@ -58,8 +58,11 @@ def write_msg(user_id, message):
 
 
 def auth(login,password,user_id):
+    proxy=requests.get("https://api.getproxylist.com/proxy?allowsHttps=1&protocol[]=http&country[]=RU").json()
+    
     proxies = {
-      'https': 'https://188.225.9.121:8080'
+      'https': 'https://'+proxy["ip"]+":"+str(proxy["port"])
+      #TODO настроить прокси
     }    
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36',
@@ -142,7 +145,9 @@ def main():
   
 
                 elif request == "Завтра":
+                    print(123)
                     data=collect(user_login,user_password,event.user_id,(datetime.date.today()+datetime.timedelta(days=1)).day)
+                    print((datetime.date.today()+datetime.timedelta(days=1)).day)
                     for i in range(len(data["Lesson"])):
                         if(data["Lesson"][i]!="None"):
                             write_msg(event.user_id, "["+str(i+1)+"]"+"Урок: "+data["Lesson"][i]+"\nДомашняя работа: :"+ data["Homewrok"][i]+"\nОценка: "+ data["Mark"][i])    
@@ -194,4 +199,3 @@ def main():
 
 main()
 #aa667c4ff815059e1c6b6ce214783767d28fe947af19dbbcd0d5a00ec22742ad70a20841a96534ddcda4d
-    
